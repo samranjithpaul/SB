@@ -1,7 +1,7 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
 
-export default function Soundtrack(){
+export default function Soundtrack({src}:{src:string}){
  const ref=useRef<HTMLAudioElement>(null);
  const [audible,setAudible]=useState(false);
  const toggle=useRef<()=>void>(()=>{});
@@ -56,7 +56,7 @@ export default function Soundtrack(){
    play();
    return ()=>{for(const event of ['playing','pause','volumechange']) audio.removeEventListener(event,update);audio.removeEventListener('playing',align);audio.removeEventListener('playing',enableMix);window.removeEventListener('click',tap);audio.pause();if(context) void context.close();};
  },[]);
- return <><audio ref={ref} src="/notebook-loop.mp3" loop preload="auto" />
+ return <><audio ref={ref} src={src} loop preload="auto" />
    <button type="button" className="sound-toggle" aria-label="Sound" aria-pressed={audible}
      title={audible?'Mute sound':'Turn sound on'} onClick={event=>{event.stopPropagation();toggle.current();}}>
      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

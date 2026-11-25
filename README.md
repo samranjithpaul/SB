@@ -127,13 +127,10 @@ The small speaker in the bottom-right corner toggles the soundtrack. Muting lets
 
 ### Replace the song
 
-1. Prepare a loop with a clean transition from the end back to the beginning. Export it as an actual MP3. If your source is FLAC and you have FFmpeg installed, run the following command from the repository root. Replace the quoted input path with your own. FFmpeg asks before overwriting the existing track.
+**Quickest way on GitHub:** Open the [public folder](https://github.com/samranjithpaul/SB/tree/main/public). Rename your new MP3 to `notebook-loop.mp3`, choose **Add file → Upload files**, and commit the replacement to `main`. Vercel deploys the new audio. Refresh the notebook once the deployment is ready. This works with the default song setting.
 
-   ```sh
-   ffmpeg -i "/path/to/your-loop.flac" -vn -c:a libmp3lame -q:a 3 public/notebook-loop.mp3
-   ```
+**Keep several songs:** Upload each MP3 under its own name in `public/`. In Vercel → project Settings → Environment Variables, set `NOTEBOOK_SONG` for Production to a path such as `/my-song.mp3`, then redeploy. For local playback, set the same key in `.env.local` and restart the dev server.
 
-2. If your replacement is already MP3, copy it over **public/notebook-loop.mp3**. Keeping that name lets the existing player load it. To use a different filename, update the audio element’s `src` in [app/soundtrack.tsx](app/soundtrack.tsx). Its browser URL starts with `/` and omits `public/`.
-3. To synchronize the strikes, measure the new track’s tempo and the time of a clear beat from the start. In [app/page.tsx](app/page.tsx), change `60000/142.65` to 60000 divided by the new BPM. Replace **both** occurrences of `227` in `cue()` with the beat offset in milliseconds. For example, a 120 BPM track with a beat at 0.30 seconds uses a 500 ms beat and a 300 ms offset. If you also want the opening fade to land on a musical cue, adjust its delay and duration in [app/style.css](app/style.css).
-4. Listen locally with `npm run dev`. Check a strike against the beat, listen through one loop boundary, and toggle mute during handwriting. The current mix applies about −5 dB plus EQ for the original recording. To retune it, edit the gain and frequency settings in [app/soundtrack.tsx](app/soundtrack.tsx).
-5. Commit the audio file and any timing or mix changes to the connected production branch. Once Vercel finishes deploying, reload the live notebook and play it again.
+**Optional beat sync:** A replacement plays with the existing animation timing by default. To align the strikes and heart with another recording, set `SONG_BPM` to its tempo and `SONG_BEAT_OFFSET_MS` to the time of a clear beat in milliseconds. For example, use `120` and `300` for a 120 BPM song with a beat 0.30 seconds from the start. The supplied loop uses 142.65 BPM and 227 ms. Apply these settings alongside the song path and redeploy.
+
+Use a browser-playable MP3 with a clean loop boundary. If your source is FLAC, you can convert it locally with `ffmpeg -i "your-loop.flac" -c:a libmp3lame -q:a 3 public/notebook-loop.mp3`. Test a full loop and the speaker toggle after changing tracks.

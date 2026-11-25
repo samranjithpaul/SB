@@ -23,8 +23,14 @@ export default function Page(){
  });
  const ink:ReactNode[]=[];
  // Estimated transient grid in the supplied loop, in milliseconds.
- const beat=60000/142.65;
- const cue=(time:number)=>227+Math.ceil((time-227)/beat)*beat;
+ const song = process.env.NOTEBOOK_SONG?.trim() || '/notebook-loop.mp3';
+ const bpm = Number(process.env.SONG_BPM?.trim() || 142.65);
+ const offset = Number(process.env.SONG_BEAT_OFFSET_MS?.trim() || 227);
+ if (!Number.isFinite(bpm) || bpm <= 0 || !Number.isFinite(offset) || offset < 0) {
+   throw Error('Set SONG_BPM to a positive tempo and SONG_BEAT_OFFSET_MS to a nonnegative millisecond value.');
+ }
+ const beat=60000/bpm;
+ const cue=(time:number)=>offset+Math.ceil((time-offset)/beat)*beat;
  let clock=cue(1850);
  const timing=(duration:number)=>{
    const style={'--delay':clock+'ms','--duration':duration+'ms'} as CSSProperties;
@@ -61,7 +67,7 @@ export default function Page(){
      strokeLinecap="round" style={timing(65)}/>);
  }else ink.push(<text key="empty" className="fade" x="300" y="760" fontFamily="cursive" style={timing(450)}>No letters left to count.</text>);
  const meaning=winner===null?'No letters left to count':['Friends','Love','Affection','Marriage','Enemies','Siblings'][winner];
- return <main><Soundtrack/><svg className="world" viewBox="0 0 777 947" role="img" aria-label={dateLabel+'. '+names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
+ return <main><Soundtrack src={song}/><svg className="world" viewBox="0 0 777 947" role="img" aria-label={dateLabel+'. '+names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
  <defs>
  <linearGradient id="paper" x2=".8" y2="1"><stop stopColor="#f8e7dc"/><stop offset=".65" stopColor="#f3e4d7"/><stop offset="1" stopColor="#e6d3c3"/></linearGradient>
  <pattern id="rule" width="800" height="38" patternUnits="userSpaceOnUse"><path d="M0 37.3 Q350 38 800 37.3" stroke="#98847f" opacity=".48" strokeWidth="1.9" fill="none"/></pattern>
