@@ -1,3 +1,4 @@
+import Sheet from './sheet';
 import Butterfly from './butterfly';
 import {game} from '../lib/game';
 import {notebookDate} from '../lib/date';
@@ -57,11 +58,27 @@ export default function Page(){
      strokeLinecap="round" style={timing(65)}/>);
  }else ink.push(<text key="empty" className="fade" x="300" y="760" fontFamily="cursive" style={timing(450)}>No letters left to count.</text>);
  const meaning=winner===null?'No letters left to count':['Friends','Love','Affection','Marriage','Enemies','Siblings'][winner];
- return <main><svg className="world" viewBox="0 0 777 947" role="img" aria-label={dateLabel+'. '+names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
+ const notes = [
+   ["Save me the seat next to you", "tomorrow?"],
+   ["I wrote your name in the margin again.", "I think you know why."],
+   ["When something funny happens in class,", "you’re the first person I look at."],
+   ["God willing, we’ll read this little note", "again on our wedding day."],
+   ["I suppose this means", "you want your pen back."],
+   ["Wait. Did I spell your name right?", "Let me try that again."]
+ ];
+ const lines = winner === null ? ["Every letter found a match."] : notes[winner];
+ return <main><svg className="world" viewBox="0 0 777 947" role="group" aria-label={dateLabel+'. '+names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
  <defs>
  <linearGradient id="paper" x2=".8" y2="1"><stop stopColor="#f8e7dc"/><stop offset=".65" stopColor="#f3e4d7"/><stop offset="1" stopColor="#e6d3c3"/></linearGradient>
  <pattern id="rule" width="800" height="38" patternUnits="userSpaceOnUse"><path d="M0 37.3 Q350 38 800 37.3" stroke="#98847f" opacity=".48" strokeWidth="1.9" fill="none"/></pattern>
  </defs>
+ <Sheet readyMs={clock} back={<> <g transform="translate(-66 200) rotate(-14)">
+ <rect x="-1600" y="6" width="2242" height="785" rx="5" fill="#8c9d92" opacity=".36"/>
+ <rect x="-1600" width="2238" height="783" rx="5" fill="url(#paper)"/>
+ <rect x="-1600" y="48" width="2238" height="735" fill="url(#rule)"/>
+ <path d="M80 24 Q82 395 80 783" stroke="#b58988" strokeWidth="2.4" fill="none"/>
+ <text x="112" y="362" fill="#383245" fontFamily="cursive" fontSize="24" fontStyle="italic">{lines.map((line,i)=><tspan key={line} x="112" dy={i?38:0}>{line}</tspan>)}</text>
+ </g></>}>
  <g transform="translate(-66 200) rotate(-14)">
  <rect x="-1600" y="6" width="2242" height="785" rx="5" fill="#8c9d92" opacity=".36"/>
  <rect x="-1600" width="2238" height="783" rx="5" fill="url(#paper)"/>
@@ -70,7 +87,7 @@ export default function Page(){
  <g transform={`translate(${608-dateLabel.length*8.75} 24) scale(.35)`} fill="none" stroke="#383245" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">
  {Array.from(dateLabel,(c,i)=>glyph[c]?.split('|').map((d,j)=><path key={i+'-'+j} d={d} transform={`translate(${25*i} ${Math.sin(i)*1.3}) rotate(${2*Math.sin(i*2)} 10 20)`}/>))}
  </g>
- </g>{ink}<Butterfly/></svg>
+ </g>{ink}</Sheet><Butterfly/></svg>
  <div className="texture" aria-hidden="true"/>
  <div className="opening" aria-hidden="true"/>
  </main>;
