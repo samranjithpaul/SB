@@ -3,6 +3,8 @@ import {glyph} from '../lib/glyph';
 import type {CSSProperties,ReactNode} from 'react';
 export const dynamic='force-dynamic';
 export default function Page(){
+ const year = new Intl.DateTimeFormat('en-IN', {year:'numeric', timeZone:'Asia/Kolkata'}).format(new Date());
+ const dateLabel = `Date : 08/12/${year}`;
  const names=[process.env.MALE_NAME??'SAM RANJITH PAUL S',process.env.FEMALE_NAME??'BINUSHA B','FLAMES'];
  const {pairs,count,order,winner}=game(names[0],names[1]);
  const centers=[[338,370],[370,473],[403,661]];
@@ -48,7 +50,7 @@ export default function Page(){
    stroke('M13 50 C3 37 -11 23 -10 8 C-9 -6 3 -9 11 4 C18 -12 32 -8 31 7 C30 23 20 37 11 46 L14 51',rows[2][winner].transform,1080,true);
  }else ink.push(<text key="empty" className="fade" x="300" y="760" fontFamily="cursive" style={timing(450)}>No letters left to count.</text>);
  const meaning=winner===null?'No letters left to count':['Friends','Love','Affection','Marriage','Enemies','Siblings'][winner];
- return <main><svg className="world" viewBox="0 0 777 947" role="img" aria-label={names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
+ return <main><svg className="world" viewBox="0 0 777 947" role="img" aria-label={dateLabel+'. '+names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
  <defs>
  <linearGradient id="paper" x2=".8" y2="1"><stop stopColor="#f8e7dc"/><stop offset=".65" stopColor="#f3e4d7"/><stop offset="1" stopColor="#e6d3c3"/></linearGradient>
  <pattern id="rule" width="800" height="38" patternUnits="userSpaceOnUse"><path d="M0 37.3 Q350 38 800 37.3" stroke="#98847f" opacity=".48" strokeWidth="1.9" fill="none"/></pattern>
@@ -58,6 +60,7 @@ export default function Page(){
  <rect x="-1600" width="2238" height="783" rx="5" fill="url(#paper)"/>
  <rect x="-1600" y="48" width="2238" height="735" fill="url(#rule)"/>
  <path d="M80 24 Q82 395 80 783" stroke="#b58988" strokeWidth="2.4" fill="none"/>
+ <text x="608" y="38" textAnchor="end" fontFamily="Georgia, serif" fontStyle="italic" fontSize="20" fill="#655a65">{dateLabel}</text>
  </g>{ink}</svg>
  <div className="texture" aria-hidden="true"/>
  <div className="opening" aria-hidden="true"/>
