@@ -60,6 +60,6 @@ export default function Page(){
  <path d="M80 24 Q82 395 80 783" stroke="#b58988" strokeWidth="2.4" fill="none"/>
  </g>{ink}</svg>
  <div className="texture" aria-hidden="true"/>
- <div className="mosaic" aria-hidden="true">{Array.from({length:160},(_,i)=><i key={i} style={{animationDelay:(600+(i%16)*21+Math.floor(i/16)*26+((i*67)%211))+'ms'}}/>)}</div>
+ <div className="opening" aria-hidden="true"/>
  </main>;
 }

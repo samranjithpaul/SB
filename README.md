@@ -1,6 +1,6 @@
 # SB · The FLAMES notebook
 
-A playful, silent notebook animation for Sam and Binusha, inspired by the schoolyard FLAMES game. Open the page and a black mosaic reveals the ruled paper. The pen writes FLAMES, then the first name, then the second. Matching letters get individual cancellation strokes. Finally, the pen eliminates five letters from FLAMES and draws a red heart around the survivor. The last frame stays still for a screenshot. Refresh to replay.
+A playful, silent notebook animation for Sam and Binusha, inspired by the schoolyard FLAMES game. Open the page and a full-screen fade from black reveals the ruled paper. The pen writes FLAMES, then the first name, then the second. Matching letters get individual cancellation strokes. Finally, the pen eliminates five letters from FLAMES and draws a red heart around the survivor. The last frame stays still for a screenshot. Refresh to replay.
 
 The desk fills the browser window. The notebook and writing share a vector coordinate system so the letters stay together as the window changes shape. The ink stays sharp on Retina and 4K displays. Reduced-motion preferences show the finished notebook immediately.
 
@@ -46,5 +46,5 @@ Run npm test for the counting checks. Run npm run build followed by npm start to
 - lib/game.ts pairs original character positions and calculates the elimination order.
 - lib/glyph.ts defines the uppercase pen paths. A vertical bar separates strokes.
 - app/page.tsx positions the notebook, generates the animation timeline on the server, and places the heart. Change the duration in strike() and its following pause to adjust the pace.
-- app/style.css controls viewport coverage, mosaic timing and reduced motion.
+- app/style.css controls viewport coverage, opening fade timing and reduced motion.
 - public/grain.svg supplies the repeating paper grain.
