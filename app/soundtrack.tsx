@@ -19,6 +19,8 @@ export default function Soundtrack({src}:{src:string}){
      }
    }
    let context: AudioContext | undefined;
+   let level: GainNode | undefined;
+   let muted=false;
    audio.volume=0.562;
    function enableMix(){
      if(!window.AudioContext) return;
@@ -34,19 +36,23 @@ export default function Soundtrack({src}:{src:string}){
          output.connect(band);
          output=band;
        }
-       const level=context.createGain();
-       level.gain.value=0.562;
+       level=context.createGain();
+       level.gain.value=muted?0:0.562;
        output.connect(level).connect(context.destination);
+       context.addEventListener('statechange',update);
        audio.volume=1;
      }
-     if(context.state==='suspended') void context.resume().catch(()=>{});
+     if(context.state!=='running' && context.state!=='closed') void context.resume().catch(()=>{});
    }
    function play(){void audio.play().catch(()=>{});}
-   function tap(){enableMix();play();}
-   function update(){setAudible(!audio.paused && !audio.muted);}
+   function tap(){if(!muted){enableMix();play();}}
+   function isAudible(){return !muted && !audio.paused && (!context || context.state==='running');}
+   function update(){setAudible(isAudible());}
    toggle.current=()=>{
-     if(audio.paused || audio.muted){audio.muted=false;tap();}
-     else audio.muted=true;
+     muted=isAudible();
+     audio.muted=muted;
+     if(level && context) level.gain.setValueAtTime(muted?0:0.562,context.currentTime);
+     if(!muted) tap();
      update();
    };
    for(const event of ['playing','pause','volumechange']) audio.addEventListener(event,update);
@@ -54,7 +60,7 @@ export default function Soundtrack({src}:{src:string}){
    audio.addEventListener('playing',enableMix);
    window.addEventListener('click',tap);
    play();
-   return ()=>{for(const event of ['playing','pause','volumechange']) audio.removeEventListener(event,update);audio.removeEventListener('playing',align);audio.removeEventListener('playing',enableMix);window.removeEventListener('click',tap);audio.pause();if(context) void context.close();};
+   return ()=>{for(const event of ['playing','pause','volumechange']) audio.removeEventListener(event,update);audio.removeEventListener('playing',align);audio.removeEventListener('playing',enableMix);window.removeEventListener('click',tap);audio.pause();if(context){context.removeEventListener('statechange',update);void context.close();}};
  },[]);
  return <><audio ref={ref} src={src} loop preload="auto" />
    <button type="button" className="sound-toggle" aria-label="Sound" aria-pressed={audible}
