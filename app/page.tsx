@@ -60,7 +60,9 @@ export default function Page(){
  <rect x="-1600" width="2238" height="783" rx="5" fill="url(#paper)"/>
  <rect x="-1600" y="48" width="2238" height="735" fill="url(#rule)"/>
  <path d="M80 24 Q82 395 80 783" stroke="#b58988" strokeWidth="2.4" fill="none"/>
- <text x="608" y="38" textAnchor="end" fontFamily="Georgia, serif" fontStyle="italic" fontSize="20" fill="#655a65">{dateLabel}</text>
+ <g transform={`translate(${608-dateLabel.length*8.75} 24) scale(.35)`} fill="none" stroke="#383245" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">
+ {Array.from(dateLabel,(c,i)=>glyph[c]?.split('|').map((d,j)=><path key={i+'-'+j} d={d} transform={`translate(${25*i} ${Math.sin(i)*1.3}) rotate(${2*Math.sin(i*2)} 10 20)`}/>))}
+ </g>
  </g>{ink}</svg>
  <div className="texture" aria-hidden="true"/>
  <div className="opening" aria-hidden="true"/>
