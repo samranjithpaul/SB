@@ -41,13 +41,15 @@ export default function Page(){
  }
  function strike(row:number,i:number){
    stroke('M16 -5 Q13 14 4 46',rows[row][i].transform,445);
-   clock+=205;
  }
- for(const [i,j] of pairs){strike(0,i);strike(1,j);clock+=250;}
- for(const i of order){strike(2,i);clock+=390;}
+ for(const [i,j] of pairs){strike(0,i);clock+=205;strike(1,j);clock+=455;}
+ order.forEach((i,round)=>{
+   if(round>0) clock+=595;
+   strike(2,i);
+ });
  if(winner!==null){
-   clock+=400;
-   stroke('M13 50 C3 37 -11 23 -10 8 C-9 -6 3 -9 11 4 C18 -12 32 -8 31 7 C30 23 20 37 11 46 L14 51',rows[2][winner].transform,1080,true);
+   clock+=1000;
+   stroke('M13 50 C3 37 -11 23 -10 8 C-9 -6 3 -9 11 4 C18 -12 32 -8 31 7 C30 23 20 37 11 46 L14 51',rows[2][winner].transform,1800,true);
  }else ink.push(<text key="empty" className="fade" x="300" y="760" fontFamily="cursive" style={timing(450)}>No letters left to count.</text>);
  const meaning=winner===null?'No letters left to count':['Friends','Love','Affection','Marriage','Enemies','Siblings'][winner];
  return <main><svg className="world" viewBox="0 0 777 947" role="img" aria-label={dateLabel+'. '+names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
