@@ -50,6 +50,10 @@ export default function Page(){
  if(winner!==null){
    clock+=1000;
    stroke('M13 50 C3 37 -11 23 -10 8 C-9 -6 3 -9 11 4 C18 -12 32 -8 31 7 C30 23 20 37 11 46 L14 51',rows[2][winner].transform,1800,true);
+   // A second pass of the nib leaves a little more pigment at the crossing.
+   ink.push(<path key="heart-ink-overlap" className="fade" d="M11.9 47.6 L13.1 49.6"
+     transform={rows[2][winner].transform} fill="none" stroke="#933c46" strokeWidth="1.2"
+     strokeLinecap="round" style={timing(65)}/>);
  }else ink.push(<text key="empty" className="fade" x="300" y="760" fontFamily="cursive" style={timing(450)}>No letters left to count.</text>);
  const meaning=winner===null?'No letters left to count':['Friends','Love','Affection','Marriage','Enemies','Siblings'][winner];
  return <main><svg className="world" viewBox="0 0 777 947" role="img" aria-label={dateLabel+'. '+names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
