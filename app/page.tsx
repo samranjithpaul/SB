@@ -1,3 +1,4 @@
+import Butterfly from './butterfly';
 import {game} from '../lib/game';
 import {notebookDate} from '../lib/date';
 import {glyph} from '../lib/glyph';
@@ -47,6 +48,7 @@ export default function Page(){
    if(round>0) clock+=595;
    strike(2,i);
  });
+ const butterflyLandingMs = clock;
  if(winner!==null){
    clock+=1000;
    stroke('M13 50 C3 37 -11 23 -10 8 C-9 -6 3 -9 11 4 C18 -12 32 -8 31 7 C30 23 20 37 11 46 L14 51',rows[2][winner].transform,1800,true);
@@ -69,7 +71,7 @@ export default function Page(){
  <g transform={`translate(${608-dateLabel.length*8.75} 24) scale(.35)`} fill="none" stroke="#383245" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">
  {Array.from(dateLabel,(c,i)=>glyph[c]?.split('|').map((d,j)=><path key={i+'-'+j} d={d} transform={`translate(${25*i} ${Math.sin(i)*1.3}) rotate(${2*Math.sin(i*2)} 10 20)`}/>))}
  </g>
- </g>{ink}</svg>
+ </g>{ink}<Butterfly landingMs={butterflyLandingMs}/></svg>
  <div className="texture" aria-hidden="true"/>
  <div className="opening" aria-hidden="true"/>
  </main>;
