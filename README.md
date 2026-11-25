@@ -121,6 +121,19 @@ Import **samranjithpaul/SB** into Vercel, select the repository root and the **N
 
 Copyright © 2026 Sam Ranjith Paul. Distributed under the [MIT License](LICENSE).
 
-## Soundtrack
+## Soundtrack and mute control
 
-The supplied loop is served as MP3. If the browser blocks audible autoplay, tap the notebook once to start the music and replay the writing in sync. Audio loops while the finished page holds. Strike cues use an estimated 142.65 BPM grid with a 227 ms offset. Changing the recording requires updating those values in app/page.tsx.
+The small speaker in the bottom-right corner toggles the soundtrack. Muting lets the track keep its place while the pen writes. If autoplay is blocked, tap the speaker or notebook to start playback. The speaker also works with Tab and Enter or Space.
+
+### Replace the song
+
+1. Prepare a loop with a clean transition from the end back to the beginning. Export it as an actual MP3. If your source is FLAC and you have FFmpeg installed, run the following command from the repository root. Replace the quoted input path with your own. FFmpeg asks before overwriting the existing track.
+
+   ```sh
+   ffmpeg -i "/path/to/your-loop.flac" -vn -c:a libmp3lame -q:a 3 public/notebook-loop.mp3
+   ```
+
+2. If your replacement is already MP3, copy it over **public/notebook-loop.mp3**. Keeping that name lets the existing player load it. To use a different filename, update the audio element’s `src` in [app/soundtrack.tsx](app/soundtrack.tsx). Its browser URL starts with `/` and omits `public/`.
+3. To synchronize the strikes, measure the new track’s tempo and the time of a clear beat from the start. In [app/page.tsx](app/page.tsx), change `60000/142.65` to 60000 divided by the new BPM. Replace **both** occurrences of `227` in `cue()` with the beat offset in milliseconds. For example, a 120 BPM track with a beat at 0.30 seconds uses a 500 ms beat and a 300 ms offset. If you also want the opening fade to land on a musical cue, adjust its delay and duration in [app/style.css](app/style.css).
+4. Listen locally with `npm run dev`. Check a strike against the beat, listen through one loop boundary, and toggle mute during handwriting. The current mix applies about −5 dB plus EQ for the original recording. To retune it, edit the gain and frequency settings in [app/soundtrack.tsx](app/soundtrack.tsx).
+5. Commit the audio file and any timing or mix changes to the connected production branch. Once Vercel finishes deploying, reload the live notebook and play it again.

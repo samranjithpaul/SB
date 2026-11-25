@@ -9,3 +9,8 @@
 @media(prefers-reduced-motion:reduce){.opening{display:none}.stroke{animation:none;stroke-dashoffset:0}.fade{animation:none;opacity:1}}
 
 @media(prefers-reduced-motion:reduce){.butterfly{display:none}}
+
+.sound-toggle{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));z-index:1;width:44px;height:44px;display:grid;place-items:center;border:0;background:transparent;color:#453b46;cursor:pointer;animation:appear 1.262s ease .648s both}
+.sound-toggle svg{box-sizing:content-box;padding:5px;border:1px solid #a5988a;border-radius:48% 51% 46% 50%;background:#f3e4d7}
+.sound-toggle:focus-visible{outline:2px solid currentColor;border-radius:50%}
+@media(prefers-reduced-motion:reduce){.sound-toggle{animation:none}}
