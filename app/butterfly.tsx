@@ -7,6 +7,8 @@ const perches = [[120,155],[365,116],[653,185],[684,490],[637,813],[326,838],[92
 
 export default function Butterfly() {
   const body = useRef<SVGGElement>(null);
+  const shadow = useRef<SVGUseElement>(null);
+  const blur = useRef<SVGFEGaussianBlurElement>(null);
   useEffect(() => {
     const bird = body.current;
     if (!bird) return;
@@ -47,6 +49,10 @@ export default function Butterfly() {
         x=nextX; y=nextY;
         spread=t>.40 && t<.57?.94:.57+.39*Math.sin(phase);
       }
+      const lift=resting ? 0 : Math.sin(Math.PI*elapsed/duration);
+      shadow.current?.setAttribute('transform',`translate(${x+2+8*lift} ${y+3+12*lift}) rotate(${heading*180/Math.PI})`);
+      shadow.current?.setAttribute('opacity',String(.30-.14*lift));
+      blur.current?.setAttribute('stdDeviation',String(1.8+3.6*lift));
       bird!.setAttribute('transform',`translate(${x} ${y}) rotate(${heading*180/Math.PI})`);
       bird!.setAttribute('opacity','1');
       wings.forEach(wing=>wing.setAttribute('transform',`scale(${spread} 1)`));
@@ -63,6 +69,11 @@ export default function Butterfly() {
   },[]);
   return <g className="butterfly" aria-hidden="true" pointerEvents="none">
     <defs>
+      <filter id="butterfly-shadow" filterUnits="userSpaceOnUse" x="-85" y="-85" width="170" height="170">
+        <feGaussianBlur ref={blur} in="SourceAlpha" result="blurred" stdDeviation="1.8"/>
+        <feFlood floodColor="#48362b"/>
+        <feComposite in2="blurred" operator="in"/>
+      </filter>
       <linearGradient id="wing-color" x2=".9" y2="1"><stop stopColor="#ffda41"/><stop offset=".53" stopColor="#ff8915"/><stop offset="1" stopColor="#e74910"/></linearGradient>
       <g id="wing">
         <path d="M0 0 C2 -5 7 -17 17 -20 Q22 -21 21 -15 Q20 -5 12 1 Q18 4 13 10 Q7 17 3 10 Q0 6 0 0Z" fill="url(#wing-color)" stroke="#33231f" strokeWidth="1.3"/>
@@ -71,8 +82,9 @@ export default function Butterfly() {
         <g fill="#fff7d7"><circle cx="17" cy="-16" r="1.1"/><circle cx="19.5" cy="-14" r=".7"/></g>
       </g>
     </defs>
+    <use ref={shadow} href="#butterfly-shape" opacity="0" filter="url(#butterfly-shadow)"/>
     <g ref={body} opacity="0">
-      <g transform="rotate(90) scale(1.8)">
+      <g id="butterfly-shape" transform="rotate(90) scale(2.07)">
         {[-1,1].map(side=><g key={side} transform={`scale(${side} 1)`}><g data-wing="">
           <use href="#wing"/>
         </g></g>)}
