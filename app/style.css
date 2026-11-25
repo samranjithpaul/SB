@@ -9,9 +9,3 @@
 @media(prefers-reduced-motion:reduce){.opening{display:none}.stroke{animation:none;stroke-dashoffset:0}.fade{animation:none;opacity:1}}
 
 @media(prefers-reduced-motion:reduce){.butterfly{display:none}}
-
-.face{transform-box:view-box;transform-origin:50% 50%;backface-visibility:hidden;transition:transform .85s cubic-bezier(.45,.05,.32,1)}
-.front,.turned .reverse{transform:perspective(1400px) rotateY(0deg)}
-.reverse{transform:perspective(1400px) rotateY(180deg)}
-.turned .front{transform:perspective(1400px) rotateY(-180deg)}
-@media(prefers-reduced-motion:reduce){.face{transition:none}}
