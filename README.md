@@ -1,5 +1,7 @@
 # SB · The FLAMES notebook
 
+<img width="1698" height="408" alt="image" src="https://github.com/user-attachments/assets/51320044-5176-4e28-ace1-ebe7a6eceec0" />
+
 A playful, silent notebook animation for Sam and Binusha, inspired by the schoolyard FLAMES game. Open the page and a full-screen fade from black reveals the ruled paper. The pen writes FLAMES, then the first name, then the second. Matching letters get individual cancellation strokes. Finally, the pen eliminates five letters from FLAMES and draws a red heart around the survivor. The last frame stays still for a screenshot. Refresh to replay.
 
 The desk fills the browser window. The notebook and writing share a vector coordinate system so the letters stay together as the window changes shape. The ink stays sharp on Retina and 4K displays. Reduced-motion preferences show the finished notebook immediately.
