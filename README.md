@@ -20,14 +20,17 @@ npm install
 npm run dev
 ~~~
 
-## Change the names
+## Change the names and date
 
 Open .env.local in a text editor. Put the first name on the upper line and the second name on the lower line. Save, stop the development server, and run npm run dev again.
 
 ~~~dotenv
 MALE_NAME="SAM RANJITH PAUL S"
 FEMALE_NAME="BINUSHA B"
+NOTEBOOK_DATE="08/12"
 ~~~
+
+Use DD/MM for the current year in India or DD/MM/YYYY for a fixed date. The date is decorative. Every winning letter gets the same one-second hold and heart.
 
 These variables are read on the server. Visitors see the configured names in the scene. The two names above are the defaults when variables are absent. An empty or punctuation-only value produces a server configuration error. Uppercase Latin letters use hand-drawn paths. Other visible characters fade in using the browser's cursive font.
 
@@ -39,7 +42,7 @@ For the default names, six pairs cancel. Eleven letters remain. E, S, A, F and L
 
 ## Deploy on Vercel
 
-Import samranjithpaul/SB into Vercel with the Next.js preset and the repository root as the project directory. Use main as the production branch. To customize the live names, open the project's Settings → Environment Variables, add MALE_NAME and FEMALE_NAME for Production, then redeploy. Subsequent main-branch pushes trigger fresh deployments when Git integration is enabled.
+Import samranjithpaul/SB into Vercel with the Next.js preset and the repository root as the project directory. Use main as the production branch. To customize the live names, open the project's Settings → Environment Variables, set MALE_NAME, FEMALE_NAME and optionally NOTEBOOK_DATE for Production, then redeploy. Subsequent main-branch pushes trigger fresh deployments when Git integration is enabled.
 
 ## Check and customize
 

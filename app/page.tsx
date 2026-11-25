@@ -1,10 +1,10 @@
 import {game} from '../lib/game';
+import {notebookDate} from '../lib/date';
 import {glyph} from '../lib/glyph';
 import type {CSSProperties,ReactNode} from 'react';
 export const dynamic='force-dynamic';
 export default function Page(){
- const year = new Intl.DateTimeFormat('en-IN', {year:'numeric', timeZone:'Asia/Kolkata'}).format(new Date());
- const dateLabel = `Date : 08/12/${year}`;
+ const dateLabel = 'Date : ' + notebookDate(process.env.NOTEBOOK_DATE);
  const names=[process.env.MALE_NAME??'SAM RANJITH PAUL S',process.env.FEMALE_NAME??'BINUSHA B','FLAMES'];
  const {pairs,count,order,winner}=game(names[0],names[1]);
  const centers=[[338,370],[370,473],[403,661]];
