@@ -1,3 +1,4 @@
+import Soundtrack from './soundtrack';
 import Butterfly from './butterfly';
 import {game} from '../lib/game';
 import {notebookDate} from '../lib/date';
@@ -21,7 +22,10 @@ export default function Page(){
    });
  });
  const ink:ReactNode[]=[];
- let clock=2100;
+ // Estimated transient grid in the supplied loop, in milliseconds.
+ const beat=60000/142.65;
+ const cue=(time:number)=>227+Math.ceil((time-227)/beat)*beat;
+ let clock=cue(1850);
  const timing=(duration:number)=>{
    const style={'--delay':clock+'ms','--duration':duration+'ms'} as CSSProperties;
    clock+=duration;
@@ -38,26 +42,26 @@ export default function Page(){
      if(glyph[c]) for(const d of glyph[c].split('|')) stroke(d,transform,r===2?155:200);
      else ink.push(<text key={ink.length} className="fade" transform={transform} y="38" fontFamily="cursive" fontSize="39" textLength="20" lengthAdjust="spacingAndGlyphs" style={timing(230)}>{c}</text>);
    }
-   clock+=540;
+   clock=cue(clock+400);
  }
  function strike(row:number,i:number){
    stroke('M16 -5 Q13 14 4 46',rows[row][i].transform,445);
  }
- for(const [i,j] of pairs){strike(0,i);clock+=205;strike(1,j);clock+=455;}
+ for(const [i,j] of pairs){strike(0,i);clock=cue(clock+100);strike(1,j);clock=cue(clock+100); }
  order.forEach((i,round)=>{
-   if(round>0) clock+=595;
+   if(round>0) clock=cue(clock+200);
    strike(2,i);
  });
  if(winner!==null){
-   clock+=1000;
-   stroke('M13 50 C3 37 -11 23 -10 8 C-9 -6 3 -9 11 4 C18 -12 32 -8 31 7 C30 23 20 37 11 46 L14 51',rows[2][winner].transform,1800,true);
+   clock=cue(clock+1000);
+   stroke('M13 50 C3 37 -11 23 -10 8 C-9 -6 3 -9 11 4 C18 -12 32 -8 31 7 C30 23 20 37 11 46 L14 51',rows[2][winner].transform,4*beat,true);
    // A second pass of the nib leaves a little more pigment at the crossing.
    ink.push(<path key="heart-ink-overlap" className="fade" d="M11.9 47.6 L13.1 49.6"
      transform={rows[2][winner].transform} fill="none" stroke="#933c46" strokeWidth="1.2"
      strokeLinecap="round" style={timing(65)}/>);
  }else ink.push(<text key="empty" className="fade" x="300" y="760" fontFamily="cursive" style={timing(450)}>No letters left to count.</text>);
  const meaning=winner===null?'No letters left to count':['Friends','Love','Affection','Marriage','Enemies','Siblings'][winner];
- return <main><svg className="world" viewBox="0 0 777 947" role="img" aria-label={dateLabel+'. '+names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
+ return <main><Soundtrack/><svg className="world" viewBox="0 0 777 947" role="img" aria-label={dateLabel+'. '+names.slice(0,2).join(' and ')+'. '+count+' letters remain. '+meaning+'.'}>
  <defs>
  <linearGradient id="paper" x2=".8" y2="1"><stop stopColor="#f8e7dc"/><stop offset=".65" stopColor="#f3e4d7"/><stop offset="1" stopColor="#e6d3c3"/></linearGradient>
  <pattern id="rule" width="800" height="38" patternUnits="userSpaceOnUse"><path d="M0 37.3 Q350 38 800 37.3" stroke="#98847f" opacity=".48" strokeWidth="1.9" fill="none"/></pattern>

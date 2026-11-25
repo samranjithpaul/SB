@@ -1,6 +1,6 @@
 # SB · The FLAMES notebook
 
-Two names, a ruled notebook, and the schoolyard FLAMES game. Open the page and the pen writes **FLAMES**, then both names. It crosses out matching letters one pair at a time, counts through FLAMES, and draws a red heart around the surviving letter. The finished page stays on screen while an orange butterfly continues flying around the margins. Refresh to replay.
+Two names, a looping soundtrack, a ruled notebook, and the schoolyard FLAMES game. Open the page and the pen writes **FLAMES**, then both names. It crosses out matching letters one pair at a time, counts through FLAMES, and draws a red heart around the surviving letter. The finished page stays on screen while an orange butterfly continues flying around the margins. Refresh to replay.
 
 **[Open the live notebook](https://sb-five-tau.vercel.app)**
 
@@ -78,10 +78,10 @@ The notebook uses a **777 × 947** SVG coordinate system inside a full-window de
 
 | Stage | Timing or behavior |
 | --- | --- |
-| Opening | Hold black for 500 ms, then fade over 1.5 seconds. Writing starts at 2.1 seconds. |
+| Opening | The opening follows the recording’s estimated pulse. Writing begins near 1.91 seconds. |
 | Writing | Draw FLAMES first, then the upper and lower names. Each custom pen stroke takes 155 ms for FLAMES and 200 ms for the names. More strokes and longer names extend the scene. |
 | Cancellations | Each 445 ms strike reuses the matched character’s transform. Repeated letters therefore receive marks on the paired occurrences. |
-| Final reveal | After the last elimination, hold for one second. Draw the heart over 1.8 seconds and darken its tail crossing. The final ink stays visible. |
+| Final reveal | After the last elimination, hold for at least one second. Draw the heart over four beats and darken its tail crossing. The final ink stays visible. |
 | Butterfly | Pick a starting perch among eight margin positions. Vary each flight’s direction, bend, speed, and landing offset. Flap during flight, glide briefly, then rest for 1.2–3.8 seconds before taking off again. |
 
 The butterfly pauses in a hidden tab and resumes when visible. With reduced motion enabled, the stylesheet displays the completed notebook immediately and hides the butterfly. The SVG’s accessible label includes the date, names, unmatched count, and outcome.
@@ -120,3 +120,7 @@ Import **samranjithpaul/SB** into Vercel, select the repository root and the **N
 ## License
 
 Copyright © 2026 Sam Ranjith Paul. Distributed under the [MIT License](LICENSE).
+
+## Soundtrack
+
+The supplied loop is served as MP3. If the browser blocks audible autoplay, tap the notebook once to start the music and replay the writing in sync. Audio loops while the finished page holds. Strike cues use an estimated 142.65 BPM grid with a 227 ms offset. Changing the recording requires updating those values in app/page.tsx.
