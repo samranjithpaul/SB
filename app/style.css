@@ -1,0 +1,10 @@
+*{box-sizing:border-box}html,body{margin:0;background:#000}main{position:fixed;inset:0;overflow:hidden;background:radial-gradient(ellipse at 24% 12%,#e4dbcb,#d0d6ca 57%,#aec5bc)}
+.world{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.texture,.mosaic{position:absolute;inset:0;pointer-events:none}
+.texture{background-image:url('/grain.svg');opacity:.11;mix-blend-mode:multiply}
+.mosaic{display:grid;grid-template-columns:repeat(16,1fr);grid-template-rows:repeat(10,1fr)}
+.mosaic i{background:#000;animation:open 700ms ease-in-out forwards}
+.stroke{stroke-dasharray:1;stroke-dashoffset:1;animation:draw var(--duration) ease-in-out var(--delay) forwards}
+.fade{opacity:0;animation:appear var(--duration) ease var(--delay) forwards}
+@keyframes open{to{opacity:0}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes appear{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.mosaic{display:none}.stroke{animation:none;stroke-dashoffset:0}.fade{animation:none;opacity:1}}
