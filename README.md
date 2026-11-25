@@ -79,7 +79,7 @@ The notebook uses a **777 × 947** SVG coordinate system inside a full-window de
 | Stage | Timing or behavior |
 | --- | --- |
 | Opening | Hold black for 500 ms, then fade over 1.5 seconds. Writing starts at 2.1 seconds. |
-| Writing | Draw FLAMES first, then the upper and lower names. Each custom pen stroke takes 155 ms. More strokes and longer names extend the scene. |
+| Writing | Draw FLAMES first, then the upper and lower names. Each custom pen stroke takes 155 ms for FLAMES and 200 ms for the names. More strokes and longer names extend the scene. |
 | Cancellations | Each 445 ms strike reuses the matched character’s transform. Repeated letters therefore receive marks on the paired occurrences. |
 | Final reveal | After the last elimination, hold for one second. Draw the heart over 1.8 seconds and darken its tail crossing. The final ink stays visible. |
 | Butterfly | Pick a starting perch among eight margin positions. Vary each flight’s direction, bend, speed, and landing offset. Flap during flight, glide briefly, then rest for 1.2–3.8 seconds before taking off again. |

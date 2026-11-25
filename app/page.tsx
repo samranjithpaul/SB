@@ -35,8 +35,8 @@ export default function Page(){
  for(const r of [2,0,1]){
    for(const {c,transform} of rows[r]){
      if(c===' '){clock+=145;continue;}
-     if(glyph[c]) for(const d of glyph[c].split('|')) stroke(d,transform,155);
-     else ink.push(<text key={ink.length} className="fade" transform={transform} y="38" fontFamily="cursive" fontSize="39" textLength="20" lengthAdjust="spacingAndGlyphs" style={timing(180)}>{c}</text>);
+     if(glyph[c]) for(const d of glyph[c].split('|')) stroke(d,transform,r===2?155:200);
+     else ink.push(<text key={ink.length} className="fade" transform={transform} y="38" fontFamily="cursive" fontSize="39" textLength="20" lengthAdjust="spacingAndGlyphs" style={timing(230)}>{c}</text>);
    }
    clock+=540;
  }
